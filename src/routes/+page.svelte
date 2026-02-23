@@ -2,6 +2,8 @@
     import { base } from "$app/paths";
     import projects from "$lib/projects.json";
     import Project from "$lib/Project.svelte";
+    import reading from "$lib/reading.json";
+    import ReadingItem from "$lib/ReadingItem.svelte";
 </script>
 
 <svelte:head>
@@ -44,5 +46,12 @@
 <div class="projects highlights">
     {#each projects.slice(0, 3) as p (p.title)}
         <Project data={p} />
+    {/each}
+</div>
+
+<h2>What I’m Reading</h2>
+<div class="reading">
+    {#each reading as item (item.title)}
+        <ReadingItem data={{ ...item, image: `${base}${item.image}` }} />
     {/each}
 </div>

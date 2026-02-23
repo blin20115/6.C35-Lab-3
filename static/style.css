@@ -134,3 +134,9 @@ body.resume a[href*="drive.google.com"] {
 body.resume a[href*="drive.google.com"]:hover {
   background: oklch(from var(--color-accent) 95% 5% h);
 }
+
+.reading {
+  display: grid;
+  gap: 1em;
+  margin-top: 0.75em;
+}
