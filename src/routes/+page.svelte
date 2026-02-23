@@ -1,5 +1,7 @@
 <script>
     import { base } from "$app/paths";
+    import projects from "$lib/projects.json";
+    import Project from "$lib/Project.svelte";
 </script>
 
 <svelte:head>
@@ -33,8 +35,14 @@
 
 <img
     src={`${base}/images/IMG_1229.JPG`}
-    alt="Here's a picture of me in front of MIT on Mass Ave, with the address,
-    77 Massachusetts Avenue!"
+    alt="Here's a picture of me in front of MIT on Mass Ave, with the address, 77 Massachusetts Avenue!"
     width="600"
     height="450"
 />
+
+<h2>Latest projects</h2>
+<div class="projects highlights">
+    {#each projects.slice(0, 3) as p (p.title)}
+        <Project data={p} />
+    {/each}
+</div>
