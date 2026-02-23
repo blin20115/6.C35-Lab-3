@@ -1,3 +1,7 @@
+<script>
+    import { base } from "$app/paths";
+</script>
+
 <svelte:head>
     <title>Home</title>
 </svelte:head>
@@ -6,13 +10,17 @@
 
 <nav>
     <ul>
-        <li><a class="current" href=".">Home</a></li>
-        <li><a href="projects">Projects</a></li>
-        <li><a href="A2">Assignment 2</a></li>
-        <li><a href="contact">Contact</a></li>
-        <li><a href="resume">Resume</a></li>
+        <li><a class="current" href={`${base}/`}>Home</a></li>
+        <li><a href={`${base}/projects`}>Projects</a></li>
+        <li><a href={`${base}/A2`}>Assignment 2</a></li>
+        <li><a href={`${base}/contact`}>Contact</a></li>
+        <li><a href={`${base}/resume`}>Resume</a></li>
         <li>
-            <a href="https://github.com/blin20115" target="_blank">Github</a>
+            <a
+                href="https://github.com/blin20115"
+                target="_blank"
+                rel="noreferrer">Github</a
+            >
         </li>
     </ul>
 </nav>
