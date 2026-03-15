@@ -23,6 +23,14 @@
     );
     console.log(wrangled);
   });
+
+  $: barData = d3
+    .rollups(
+      projects,
+      (v) => v.length,
+      (d) => d.year,
+    )
+    .map(([year, count]) => ({ label: String(year), value: count }));
 </script>
 
 <svelte:head>
@@ -36,7 +44,7 @@
   professional and personal life
 </p>
 
-<Bar />
+<Bar data={barData} />
 
 <ProjectNarrative />
 
