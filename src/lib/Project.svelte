@@ -6,7 +6,12 @@
 <article>
     <h2>{data.title}</h2>
     <img src={`${base}/${data.image}`} alt={data.alt ?? ""} />
-    <p>{data.description}</p>
+    <p>
+        {#if data.year}
+            <span class="year">{data.year}</span>
+        {/if}
+        {data.description}
+    </p>
 </article>
 
 <style>
@@ -18,5 +23,12 @@
 
     article h2 {
         margin: 0;
+    }
+
+    .year {
+        font-size: 0.85em;
+        font-weight: 600;
+        color: oklch(55% 0 0);
+        margin-right: 0.4em;
     }
 </style>

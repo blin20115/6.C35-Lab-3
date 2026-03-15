@@ -22,6 +22,7 @@
         { url: "/A3", title: "Assignment 3" },
         { url: "/A4", title: "Assignment 4" },
         { url: "/contact", title: "Contact" },
+        { url: "/meta", title: "Meta" },
         { url: "/resume", title: "Resume" },
         { url: "https://github.com/blin20115", title: "Github" },
     ];
