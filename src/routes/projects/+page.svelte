@@ -6,6 +6,23 @@
 
   let years = projects.map((proj) => proj.year);
   let range = Math.max(...years) - Math.min(...years);
+
+  import { onMount } from "svelte";
+  import * as d3 from "d3";
+  import Bar from "$lib/Bar.svelte";
+
+  let rawData = [];
+  let wrangled = [];
+
+  onMount(async () => {
+    rawData = await d3.json("/lab6_example.json");
+    wrangled = d3.rollups(
+      rawData,
+      (v) => d3.sum(v, (d) => d.lines),
+      (d) => d.language,
+    );
+    console.log(wrangled);
+  });
 </script>
 
 <svelte:head>
@@ -18,6 +35,8 @@
   Scroll down to see a timeline of my projects and how they've contributed to my
   professional and personal life
 </p>
+
+<Bar />
 
 <ProjectNarrative />
 
