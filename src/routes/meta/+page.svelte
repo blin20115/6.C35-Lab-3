@@ -20,6 +20,7 @@
     let locData = [];
     let commits = [];
     let barData = [];
+    let clickedCommits = [];
 
     let xAxis, yAxis, yAxisGridlines;
     let hoveredIndex = -1;
@@ -37,6 +38,13 @@
             });
         } else if (evt.type === "mouseleave") {
             hoveredIndex = -1;
+        } else if (evt.type === "click") {
+            let commit = commits[index];
+            if (!clickedCommits.includes(commit)) {
+                clickedCommits = [...clickedCommits, commit];
+            } else {
+                clickedCommits = clickedCommits.filter((c) => c !== commit);
+            }
         }
     }
 
@@ -113,6 +121,26 @@
             d3.axisLeft(yScale).tickFormat("").tickSize(-usableArea.width),
         );
     }
+
+    $: filteredLines =
+        clickedCommits.length > 0
+            ? clickedCommits.flatMap((c) => c.lines)
+            : locData;
+
+    $: languageCounts = d3.rollup(
+        filteredLines,
+        (v) => v.length,
+        (d) => d.type,
+    );
+
+    $: allLanguages = Array.from(new Set(locData.map((d) => d.type)));
+
+    $: barData = allLanguages
+        .map((language) => ({
+            label: language,
+            value: languageCounts.get(language) ?? 0,
+        }))
+        .sort((a, b) => b.value - a.value);
 </script>
 
 <svelte:head>
@@ -139,8 +167,10 @@
                 r={rScale(commit.totalLines)}
                 fill="steelblue"
                 fill-opacity="0.5"
+                class:selected={clickedCommits.includes(commit)}
                 on:mouseenter={(evt) => dotInteraction(index, evt)}
                 on:mouseleave={(evt) => dotInteraction(index, evt)}
+                on:click={(evt) => dotInteraction(index, evt)}
             />
         {/each}
     </g>
@@ -172,7 +202,10 @@
     <dd>{hoveredCommit.totalLines}</dd>
 </dl>
 
-<BarHorizontal data={barData} />
+<BarHorizontal
+    data={barData}
+    title={clickedCommits.length > 0 ? "Selected Commits" : "Website Breakdown"}
+/>
 
 <style>
     svg {
@@ -188,6 +221,10 @@
         &:hover {
             fill: darkgreen;
         }
+    }
+
+    .selected {
+        fill: var(--color-accent);
     }
 
     dl.info {
